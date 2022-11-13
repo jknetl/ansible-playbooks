@@ -1,0 +1,12 @@
+- name: Setup user utilities
+  hosts: servers
+  tasks:
+    - name: Install oh my zsh for user {{ owner }}
+      git:
+        repo: https://github.com/ohmyzsh/ohmyzsh.git
+        dest: '/home/{{owner}}/.oh-my-zsh'
+    - name: Copy zshrc
+      copy:
+        src: files/zshrc
+        dest: ~/.zshrc
+        mode: 0644

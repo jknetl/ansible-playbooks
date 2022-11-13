@@ -1,0 +1,8 @@
+# Don't allow login with empty password
+PermitEmptyPasswords no
+
+# Disable authentication with password
+PasswordAuthentication no
+
+# Don't allow to authenticate as root over ssh
+PermitRootLogin no

@@ -1,0 +1,14 @@
+- name: install k3s cluster
+  hosts: servers
+  tasks:
+    - name: Download and install k3s
+      become: yes
+      become_method: sudo
+      block:
+       - name: Download k3s
+         get_url:
+           url: https://get.k3s.io/
+           dest: /root/get.k3s.io.sh
+           mode: '744'
+       - name: Install k3s
+         shell: /root/get.k3s.io.sh
