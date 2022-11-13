@@ -1,0 +1,42 @@
+- name: install software
+  hosts: servers
+  tasks:
+    - name: Configure basic server tools
+      become: yes
+      become_method: su
+      block:
+        - name: Install tools
+          apt:
+            update-cache: yes
+            pkg:
+              - sudo
+              - vim
+              - zsh
+              - curl
+              - git
+        - name: adding ansible user '{{ owner }}' to group sudo
+          user:
+            name: '{{ owner }}'
+            groups: sudo
+            append: yes
+        - name: Copy additional sshd_config
+          copy:
+            src: ./files/sshd_config
+            dest: /etc/ssh/sshd_config.d/99-security-hardening.conf
+        - name: restart sshd
+          systemd:
+            state: restarted
+            daemon_reload: yes
+            name: sshd
+
+    - name: Configure owner shell
+      block:
+        - name: Set ZSH as default shell for user '{{ owner }}'
+          become: yes
+          become_method: su
+          user:
+            name: '{{ owner }}'
+            shell: /bin/zsh
+        - name: Install oh-my-zsh
+          shell:  curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh) | sh
+
