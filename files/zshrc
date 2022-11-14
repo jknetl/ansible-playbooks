@@ -1,5 +1,5 @@
 plugins=(docker docker-compose fasd)
-ZSH_THEME="muse"
+ZSH_THEME="robbyrussell"
 
 ZSH=~/.oh-my-zsh
 source "$ZSH/oh-my-zsh.sh"
