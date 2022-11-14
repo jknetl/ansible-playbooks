@@ -1,0 +1,44 @@
+- name: install Docker deamon
+  hosts: servers
+  tasks:
+    - name: Install Docker
+      become: yes
+      become_method: sudo
+      block:
+      - name: Install required system packages
+        apt:
+          pkg:
+            - apt-transport-https
+            - ca-certificates
+            - curl
+            - software-properties-common
+            - python3-pip
+            - virtualenv
+            - python3-setuptools
+          state: latest
+          update_cache: true
+
+      - name: Add Docker GPG apt Key
+        apt_key:
+          url: https://download.docker.com/linux/debian/gpg
+          state: present
+
+      - name: Add Debian Docker Repository
+        apt_repository:
+          repo: deb [arch=amd64] https://download.docker.com/linux/debian   bullseye stable
+          state: present
+
+      - name: Update apt and install docker-ce
+        apt:
+          pkg:
+            - docker-ce
+            - docker-ce-cli
+            - containerd.io
+            - docker-compose-plugin
+          state: latest
+          update_cache: true
+      - name: adding ansible user '{{ owner }}' to group sudo
+        user:
+          name: '{{ owner }}'
+          groups: docker
+          append: yes
