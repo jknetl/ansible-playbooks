@@ -15,6 +15,8 @@
               - curl
               - git
               - snapd
+              - screen
+              - mc
         - name: adding ansible user '{{ owner }}' to group sudo
           user:
             name: '{{ owner }}'
@@ -40,5 +42,3 @@
           user:
             name: '{{ owner }}'
             shell: /bin/zsh
-
-
