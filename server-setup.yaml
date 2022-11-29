@@ -17,6 +17,10 @@
               - snapd
               - screen
               - mc
+              - parted
+              - cryptsetup
+              - rsync
+              - ntfs-3g
         - name: adding ansible user '{{ owner }}' to group sudo
           user:
             name: '{{ owner }}'
